@@ -1,3 +1,15 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+    path: /
+    controller: App\Controller\ProstagesController::index
+
+entreprises:
+    path: /entreprises
+    controller: App\Controller\ProstagesController::entreprises
+
+formations:
+    path: /formations
+    controller: App\Controller\ProstagesController::formations
+
+stages:
+    path: /stages/{id}
+    controller: App\Controller\ProstagesController::stages
