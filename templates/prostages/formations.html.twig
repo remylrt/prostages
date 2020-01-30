@@ -3,5 +3,14 @@
 {% block title %}Formations{% endblock %}
 
 {% block body %}
-<h1>Cette page affichera la liste des formations de l'IUT</h1>
+<div class="panel panel-default">
+    <div class="panel-heading"><h4>Formations</h4></div>
+    <ul class="list-group">
+        {% for formationCourante in formations %}
+            <li class="list-group-item">
+                <a href="#">{{formationCourante.sigle}} ({{formationCourante.nom}})</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

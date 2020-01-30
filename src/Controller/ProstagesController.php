@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Entreprise;
+use App\Entity\Formation;
 
 class ProstagesController extends AbstractController{
 
@@ -12,11 +14,19 @@ class ProstagesController extends AbstractController{
     }
 
     public function entreprises(){
-        return $this->render("prostages/entreprises.html.twig");
+        $repositoryEntreprise = $this->getDoctrine()->getRepository(Entreprise::class);
+
+        $entreprises = $repositoryEntreprise->findAll();
+
+        return $this->render("prostages/entreprises.html.twig", ['entreprises' => $entreprises]);
     }
 
     public function formations(){
-        return $this->render("prostages/formations.html.twig");
+        $repositoryFormation = $this->getDoctrine()->getRepository(Formation::class);
+
+        $formations = $repositoryFormation->findAll();
+
+        return $this->render("prostages/formations.html.twig", ['formations' => $formations]);
     }
 
     public function stages($id){

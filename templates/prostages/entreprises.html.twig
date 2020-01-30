@@ -3,5 +3,14 @@
 {% block title %}Entreprises{% endblock %}
 
 {% block body %}
-<h1>Cette page affichera la liste des entreprises proposant un stage</h1>
+<div class="panel panel-default">
+    <div class="panel-heading"><h4>Entreprises</h4></div>
+    <ul class="list-group">
+        {% for entrepriseCourante in entreprises %}
+            <li class="list-group-item">
+                <a href="#">{{entrepriseCourante.nom}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
