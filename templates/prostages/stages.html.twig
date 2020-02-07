@@ -3,5 +3,14 @@
 {% block title %}Entreprises{% endblock %}
 
 {% block body %}
-<h1>Cette page affichera le descriptif du stage ayant pour identifiant {{ idStage }}</h1>
+<div class="panel panel-default">
+    <div class="panel-heading"><h4>Stages</h4></div>
+    <ul class="list-group">
+        {% for stageCourant in stages %}
+            <li class="list-group-item">
+                <a href="#">{{stageCourant.entreprise}}: {{stageCourant.titre}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

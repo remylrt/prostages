@@ -11,5 +11,9 @@ formations:
     controller: App\Controller\ProstagesController::formations
 
 stages:
-    path: /stages/{id}
+    path: /stages
     controller: App\Controller\ProstagesController::stages
+
+ajouterEntreprise:
+    path: /ajouterEntreprise
+    controller: App\Controller\ProstagesController::ajouterEntreprise
