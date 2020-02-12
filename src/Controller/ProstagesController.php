@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Entreprise;
 use App\Entity\Formation;
 use App\Entity\Stage;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ProstagesController extends AbstractController{
 
@@ -37,20 +40,46 @@ class ProstagesController extends AbstractController{
         return $this->render("prostages/stages.html.twig", ['stages'=>$stages]);
     }
 
-    public function ajouterEntreprise(){
+    public function ajouterEntreprise(Request $requetteHttp, ObjectManager $manager){
         $entreprise = new Entreprise();
 
         $formulaireEntreprise = $this->createFormBuilder($entreprise)
                                     ->add('nom')
                                     ->add('activite')
                                     ->add('adresse')
-                                    ->add('site')
-                                    ->add('tel')
+                                    ->add('site', TextType::class, ['label'=>'Site web'])
+                                    ->add('tel', TextType::class, ['label'=>'Numéro de téléphone'])
                                     ->getForm();
+                                    
+        $formulaireEntreprise->handleRequest($requetteHttp);
 
+        if($formulaireEntreprise->isSubmitted()){
+            $manager->persist($entreprise);
+            $manager->flush();
+        }
+        
         return $this->render("prostages/ajouterEntreprise.html.twig", ['vueFormulaireEntreprise'=>$formulaireEntreprise->createView()]);
     }
 
+    public function modifierEntreprise(Request $requetteHttp, ObjectManager $manager, Entreprise $entreprise){
+        $formulaireEntreprise = $this->createFormBuilder($entreprise)
+                                    ->add('nom')
+                                    ->add('activite')
+                                    ->add('adresse')
+                                    ->add('site', TextType::class, ['label'=>'Site web'])
+                                    ->add('tel', TextType::class, ['label'=>'Numéro de téléphone'])
+                                    ->getForm();
+                                    
+        $formulaireEntreprise->handleRequest($requetteHttp);
+
+        if($formulaireEntreprise->isSubmitted()){
+            $manager->persist($entreprise);
+            $manager->flush();
+        }
+        
+        return $this->render("prostages/modifierEntreprise.html.twig", ['vueFormulaireEntreprise'=>$formulaireEntreprise->createView()]);
+    }
+                                
     /*public function stages($id){
         return $this->render("prostages/stages.html.twig", ['idStage'=>$id]);
     }*/
