@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EntrepriseRepository")
@@ -20,21 +21,40 @@ class Entreprise
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="L'activité doit être renseignée.")
+     * @Assert\Length(min=4,minMessage="Le nom doit être composé d'au moins 4 caractères")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\Regex(
+     *     pattern="/ [0-9]{5} /",
+     *     match=true,
+     *     message="Le code postal n'est pas valide."
+     * )
+     * @Assert\Regex(
+     *     pattern="/ rue|avenue|boulevard|impasse|allée|place|route|voie /",
+     *     match=true,
+     *     message="Le type de voie n'est pas valide."
+     * )
+     * @Assert\Regex(
+     *     pattern="/^[1-9][0-9]{0,2}(bis)? /",
+     *     match=true,
+     *     message="Le numéro n'est pas valide."
+     * )
      */
     private $adresse;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\Url
      */
     private $site;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="L'activité doit être renseignée.")
      */
     private $activite;
 

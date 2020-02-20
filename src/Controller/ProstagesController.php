@@ -53,7 +53,7 @@ class ProstagesController extends AbstractController{
                                     
         $formulaireEntreprise->handleRequest($requetteHttp);
 
-        if($formulaireEntreprise->isSubmitted()){
+        if($formulaireEntreprise->isSubmitted() && $formulaireEntreprise->isValid()){
             $manager->persist($entreprise);
             $manager->flush();
         }
@@ -72,7 +72,7 @@ class ProstagesController extends AbstractController{
                                     
         $formulaireEntreprise->handleRequest($requetteHttp);
 
-        if($formulaireEntreprise->isSubmitted()){
+        if($formulaireEntreprise->isSubmitted() && $formulaireEntreprise->isValid()){
             $manager->persist($entreprise);
             $manager->flush();
         }
