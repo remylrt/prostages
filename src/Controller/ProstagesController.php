@@ -9,7 +9,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\Entreprise;
 use App\Entity\Formation;
 use App\Entity\Stage;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Form\EntrepriseType;
+use App\Form\StageType;
 
 class ProstagesController extends AbstractController{
 
@@ -43,13 +44,7 @@ class ProstagesController extends AbstractController{
     public function ajouterEntreprise(Request $requetteHttp, ObjectManager $manager){
         $entreprise = new Entreprise();
 
-        $formulaireEntreprise = $this->createFormBuilder($entreprise)
-                                    ->add('nom')
-                                    ->add('activite')
-                                    ->add('adresse')
-                                    ->add('site', TextType::class, ['label'=>'Site web'])
-                                    ->add('tel', TextType::class, ['label'=>'Numéro de téléphone'])
-                                    ->getForm();
+        $formulaireEntreprise = $this->createForm(EntrepriseType::class, $entreprise);
                                     
         $formulaireEntreprise->handleRequest($requetteHttp);
 
@@ -62,13 +57,7 @@ class ProstagesController extends AbstractController{
     }
 
     public function modifierEntreprise(Request $requetteHttp, ObjectManager $manager, Entreprise $entreprise){
-        $formulaireEntreprise = $this->createFormBuilder($entreprise)
-                                    ->add('nom')
-                                    ->add('activite')
-                                    ->add('adresse')
-                                    ->add('site', TextType::class, ['label'=>'Site web'])
-                                    ->add('tel', TextType::class, ['label'=>'Numéro de téléphone'])
-                                    ->getForm();
+        $formulaireEntreprise = $this->createForm(EntrepriseType::class, $entreprise);
                                     
         $formulaireEntreprise->handleRequest($requetteHttp);
 
@@ -79,7 +68,22 @@ class ProstagesController extends AbstractController{
         
         return $this->render("prostages/modifierEntreprise.html.twig", ['vueFormulaireEntreprise'=>$formulaireEntreprise->createView()]);
     }
-                                
+
+    public function ajouterStage(Request $requetteHttp, ObjectManager $manager){
+        $stage = new Stage();
+
+        $formulaireStage = $this->createForm(StageType::class, $stage);
+                                    
+        $formulaireStage->handleRequest($requetteHttp);
+
+        if($formulaireStage->isSubmitted() && $formulaireStage->isValid()){
+            $manager->persist($stage);
+            $manager->flush();
+        }
+        
+        return $this->render("prostages/ajouterStage.html.twig", ['vueFormulaireStage'=>$formulaireStage->createView()]);
+    }
+
     /*public function stages($id){
         return $this->render("prostages/stages.html.twig", ['idStage'=>$id]);
     }*/

@@ -48,7 +48,9 @@ class Entreprise
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
-     * @Assert\Url
+     * @Assert\Url(
+     *    message = "L'URL n'est pas valide.",
+     * )
      */
     private $site;
 

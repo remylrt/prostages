@@ -21,3 +21,7 @@ ajouterEntreprise:
 modifierEntreprise:
     path: /modifierEntreprise/{nom}
     controller: App\Controller\ProstagesController::modifierEntreprise
+
+ajouterStage:
+    path: /ajouterStage
+    controller: App\Controller\ProstagesController::ajouterStage

@@ -22,17 +22,17 @@ class AppFixtures extends Fixture
         //Création des données pour la table Formation
         $dutinfo->setNom("Diplome Universitaire de Technologie Informatique");
         $dutinfo->setSigle("DUT Informatique");
-        $listeFormations->array_push($dutinfo);
+        array_push($listeFormations, $dutinfo);
         $manager->persist($dutinfo);
 
         $duttic->setNom("Diplome Universitaire de Technologie Technologie de l'Information et de la Communication");
         $duttic->setSigle("DUT TIC");
-        $listeFormations->array_push($duttic);
+        array_push($listeFormations, $duttic);
         $manager->persist($duttic);
 
         $licenceMulti->setNom("Licence professionnelle Multimedia");
         $licenceMulti->setSigle("LP Multimedia");
-        $listeFormations->array_push($licenceMulti);
+        array_push($listeFormations, $licenceMulti);
         $manager->persist($licenceMulti);        
 
         //Génération des données pour la table Entreprise
@@ -43,24 +43,26 @@ class AppFixtures extends Fixture
             $entreprise->setSite($faker->domainName);
             $entreprise->setActivite($faker->jobTitle);
             $entreprise->setTel($faker->regexify('0[1-5][0-9]{8}'));
-            array_push($listeEntreprise,$entreprise);
+            array_push($listeEntreprises,$entreprise);
             $manager->persist($entreprise);
         }
         
         //Génération des données pour la table Stage
         for ($i=0; $i < 30; $i++) { 
             $stage = new Stage;
-            $formations = array_rand($listeFormations,$faker->numberBetween(1,3));
+            $formations = array_rand($listeFormations, $faker->numberBetween(1,3));
             $stage->setTitre($faker->catchPhrase);
             $stage->setMail($faker->companyEmail);
             $stage->setDescription($faker->realText($maxNbChars = 255, $indexSize = 2));
             $entrepriseStage = $faker->randomElement($array = $listeEntreprises);
             $stage->setEntreprise($entrepriseStage);
             $entrepriseStage->addStage($stage);
+
             foreach ($formations as $formation) {
                 $stage->addFormation($formation);
                 $formation->addStage($stage);
             }
+
             $manager->persist($entrepriseStage);
             $manager->persist($stage);
         }
