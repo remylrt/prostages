@@ -1,0 +1,20 @@
+{% extends "templateProstages.html.twig" %}
+
+{% block title %}Details stage{% endblock %}
+
+{% block body %}
+<div class="panel panel-default">
+    <div class="panel-heading"><h4>{{stage.titre}}</h4></div>
+    <ul class="list-group">
+        <li class="list-group-item">Entreprise: <a href="/detailsEntreprise/{{stage.entreprise.nom}}">{{stage.entreprise.nom}}</a></li>
+        <li class="list-group-item">Description: {{stage.description}}</li>
+        <li class="list-group-item">Mail: {{stage.mail}}</li>
+        <li class="list-group-item">Formation(s):
+            {% for formation in stage.formations %}
+                <a href="/detailsFormation/{{formation.nom}}">{{formation.nom}}</a>, 
+            {% endfor %}
+        </li>
+    </ul><br>
+    <a href="/stages"><button type="button" class="btn btn-primary">Retour à la liste des stages</button></a>
+</div>
+{% endblock %}

@@ -26,6 +26,16 @@ class ProstagesController extends AbstractController{
         return $this->render("prostages/entreprises.html.twig", ['entreprises' => $entreprises]);
     }
 
+    public function detailsEntreprise($nomEntreprise){
+        $repositoryEntreprise = $this->getDoctrine()->getRepository(Entreprise::class);
+        $repositoryStage = $this->getDoctrine()->getRepository(Stage::class);
+
+        $entreprise = $repositoryEntreprise->findOneBy(['nom'=> $nomEntreprise]);
+        $stages = $repositoryStage->findByEntreprise($nomEntreprise);
+
+        return $this->render("prostages/detailsEntreprise.html.twig", ['entreprise'=>$entreprise, 'stages'=>$stages]);
+    }
+
     public function formations(){
         $repositoryFormation = $this->getDoctrine()->getRepository(Formation::class);
 
@@ -34,11 +44,30 @@ class ProstagesController extends AbstractController{
         return $this->render("prostages/formations.html.twig", ['formations' => $formations]);
     }
 
+    public function detailsFormation($nomFormation){
+        $repositoryFormation = $this->getDoctrine()->getRepository(Formation::class);
+        $repositoryStage = $this->getDoctrine()->getRepository(Stage::class);
+
+        $formation = $repositoryFormation->findOneBy(['nom'=> $nomFormation]);
+        $stages = $repositoryStage->findByFormation($nomFormation);
+
+        return $this->render("prostages/detailsFormation.html.twig", ['formation'=>$formation, 'stages'=>$stages]);
+    }
+
     public function stages(){
         $repositoryStage = $this->getDoctrine()->getRepository(Stage::class);
 
         $stages = $repositoryStage->findAll();
+        
         return $this->render("prostages/stages.html.twig", ['stages'=>$stages]);
+    }
+
+    public function detailsStage($idStage){
+        $repositoryStage = $this->getDoctrine()->getRepository(Stage::class);
+
+        $stage = $repositoryStage->findOneBy(['id'=> $idStage]);
+
+        return $this->render("prostages/detailsStage.html.twig", ['stage'=>$stage]);
     }
 
     public function ajouterEntreprise(Request $requetteHttp, ObjectManager $manager){

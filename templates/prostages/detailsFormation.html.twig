@@ -1,0 +1,17 @@
+{% extends "templateProstages.html.twig" %}
+
+{% block title %}Details formation{% endblock %}
+
+{% block body %}
+<div class="panel panel-default">
+    <div class="panel-heading"><h4>{{formation.nom}} ({{formation.sigle}})</h4></div>
+    <ul class="list-group">
+        <li class="list-group-item">Stage(s):
+            {% for stage in stages %}
+                <a href="/detailsStage/{{stage.id}}">{{stage.titre}}</a>, 
+            {% endfor %}
+        </li>
+    </ul><br>
+    <a href="/entreprises"><button type="button" class="btn btn-primary">Retour à la liste des formations</button></a>
+</div>
+{% endblock %}

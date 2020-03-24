@@ -6,13 +6,25 @@ entreprises:
     path: /entreprises
     controller: App\Controller\ProstagesController::entreprises
 
+detailsEntreprise:
+    path: /detailsEntreprise/{nomEntreprise}
+    controller: App\Controller\ProstagesController::detailsEntreprise
+
 formations:
     path: /formations
     controller: App\Controller\ProstagesController::formations
 
+detailsFormation:
+    path: /detailsFormation/{nomFormation}
+    controller: App\Controller\ProstagesController::detailsFormation
+
 stages:
     path: /stages
     controller: App\Controller\ProstagesController::stages
+
+detailsStage:
+    path: /detailsStage/{idStage}
+    controller: App\Controller\ProstagesController::detailsStage
 
 ajouterEntreprise:
     path: /ajouterEntreprise

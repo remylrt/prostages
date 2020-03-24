@@ -8,7 +8,7 @@
     <ul class="list-group">
         {% for formationCourante in formations %}
             <li class="list-group-item">
-                <a href="#">{{formationCourante.sigle}} ({{formationCourante.nom}})</a>
+                <a href="/detailsFormation/{{formationCourante.nom}}">{{formationCourante.nom}} ({{formationCourante.sigle}})</a>
             </li>
         {% endfor %}
     </ul>
